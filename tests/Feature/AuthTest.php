@@ -32,4 +32,18 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
         $this->assertArrayHasKey('access_token', $response->json());
     }
+
+    public function test_register()
+    {
+        Artisan::call('passport:install');
+        $this->withoutExceptionHandling();
+
+        $response = $this->post(route('api.register'),[
+            'fullname'=>'Luis Eloy',
+            'email'=>'luis@gmail.com',
+            'password'=>'123456'
+        ]);
+        $response->assertStatus(200);
+        $this->assertArrayHasKey('access_token', $response->json());
+    }
 }
