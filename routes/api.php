@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use App\Http\Controllers\AuthController;
 
 Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
 Route::post('auth/register', [AuthController::class, 'register'])->name('api.register');
+
+Route::get('produts', [ProductController::class, 'get_products'])->name('api.products.list');
 
 Route::group([
     'middleware' => 'auth:api'
