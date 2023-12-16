@@ -29,4 +29,5 @@ Route::group([
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('api.auth.logout');
     Route::post('products/create', [ProductController::class, 'create_product'])->name('api.products.create');
     Route::put('product/{product_id}', [ProductController::class, 'update_product'])->name('api.products.update');
+    Route::delete('product/{product_id}', [ProductController::class, 'delete_product'])->name('api.products.delete');
 });

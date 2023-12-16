@@ -122,4 +122,29 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
         $this->arrayHasKey('product', $response->json());
     }
+
+    public function test_delete_product()
+    {
+        $this->withoutExceptionHandling();
+        $token = $this->authenticate();
+
+        $product = Product::create([
+            'nombre'=>'cuchara',
+            'descripcion'=>'cuchara sopera',
+            'sku'=>'PRO123ARA',
+            'precio'=>5,
+            'cantidad'=>50,
+            'imagen'=>'/test/route/cuchara.png',
+            'activo'=>true,
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization'=>'Bearer '.$token,
+            'Accept'=>'application/json', 
+        ])->delete(route('api.products.delete', $product->id));
+
+        $response->assertStatus(200);
+        $this->arrayHasKey('message', $response->json());
+        $this->assertEquals('Ha borrado el producto satisfactoriamente', $response->json()['message']);
+    }
 }

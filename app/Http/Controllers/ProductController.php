@@ -32,6 +32,7 @@ class ProductController extends Controller
             'products'=>$products
         ]);
     }
+
     public function create_product(ProductRequest $request)
     {
         try {
@@ -53,6 +54,7 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
     public function get_product(Product $product_id)
     {   
         return response([
@@ -73,6 +75,22 @@ class ProductController extends Controller
     
             return response([
                 'product'=>$product_id
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function delete_product(Product $product_id)
+    {
+        try {
+            $product_id->activo = false;
+            $product_id->save();
+
+            return response([
+                'message'=>'Ha borrado el producto satisfactoriamente'
             ]);
         } catch (\Throwable $th) {
             return response([
