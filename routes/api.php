@@ -19,7 +19,7 @@ use App\Http\Controllers\ProductController;
 Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
 Route::post('auth/register', [AuthController::class, 'register'])->name('api.register');
 
-Route::get('produts', [ProductController::class, 'get_products'])->name('api.products.list');
+Route::get('products', [ProductController::class, 'get_products'])->name('api.products.list');
 
 Route::group([
     'middleware' => 'auth:api'
