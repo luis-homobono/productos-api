@@ -17,9 +17,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $name_prod = fake()->word();
-        $num_sku = fake()->numberBetween(100,999);
         $rest = substr($name_prod, -3);
-        $sku = "PRO" . strval($num_sku) . strtoupper($rest);
+        $sku = "PRO" . rand(0,9) . rand(0,9) . rand(0,9) . strtoupper($rest);
 
         return [
             'nombre'=>fake()->word(),

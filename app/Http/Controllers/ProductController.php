@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -29,6 +30,33 @@ class ProductController extends Controller
 
         return response()->json([
             'products'=>$products
+        ]);
+    }
+    public function create_product(ProductRequest $request)
+    {
+        try {
+            $product = Product::create([
+                'nombre'=>$request->nombre,
+                'descripcion'=>$request->descripcion,
+                'sku'=>'PRO' . rand(0,9) . rand(0,9) . rand(0,9) . strtoupper(substr($request->nombre, -3)),
+                'precio'=>$request->precio,
+                'cantidad'=>$request->cantidad,
+                'imagen'=>$request->imagen,
+                'activo'=>true,
+            ]);
+            return response([
+                'product'=>new ProductResource($product),
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
+    }
+    public function get_product(Product $product_id)
+    {   
+        return response([
+            'product'=>new ProductResource($product_id)
         ]);
     }
 }
