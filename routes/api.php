@@ -17,3 +17,10 @@ use App\Http\Controllers\AuthController;
 
 Route::post('auth/login', [AuthController::class, 'login'])->name('api.login');
 Route::post('auth/register', [AuthController::class, 'register'])->name('api.register');
+
+Route::group([
+    'middleware' => 'auth:api'
+], function(){
+    Route::get('auth/get-user', [AuthController::class, 'get_user'])->name('api.auth.get_user');
+    Route::get('auth/logout', [AuthController::class, 'logout'])->name('api.auth.logout');
+});

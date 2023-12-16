@@ -36,4 +36,25 @@ class AuthController extends Controller
             'access_token'=>$access_token,
         ]);
     }
+
+    public function get_user()
+    {
+        return response([
+            'user' => auth()->user()
+        ]);
+    }
+
+    public function logout()
+    {
+        try{
+            auth()->user()->token()->revoke();
+            return response([
+                'message'=>'Ha cerrado sesión satisfactoriamente',
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
+    }
 }
