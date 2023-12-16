@@ -62,16 +62,22 @@ class ProductController extends Controller
 
     public function update_product(ProductRequest $request, Product $product_id)
     {
-        $product_id->nombre = $request->nombre;
-        $product_id->descripcion = $request->descripcion;
-        $product_id->sku = substr($product_id->sku, 0, -3) . strtoupper(substr($request->nombre,-3));
-        $product_id->precio = $request->precio;
-        $product_id->cantidad = $request->cantidad;
-        $product_id->imagen = $request->imagen;
-        $product_id->save();
-
-        return response([
-            'product'=>$product_id
-        ]);
+        try {
+            $product_id->nombre = $request->nombre;
+            $product_id->descripcion = $request->descripcion;
+            $product_id->sku = substr($product_id->sku, 0, -3) . strtoupper(substr($request->nombre,-3));
+            $product_id->precio = $request->precio;
+            $product_id->cantidad = $request->cantidad;
+            $product_id->imagen = $request->imagen;
+            $product_id->save();
+    
+            return response([
+                'product'=>$product_id
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
     }
 }
