@@ -21,13 +21,14 @@ Route::post('auth/register', [AuthController::class, 'register'])->name('api.reg
 
 Route::get('products', [ProductController::class, 'get_products'])->name('api.products.list');
 Route::get('product/{product_id}', [ProductController::class, 'get_product'])->name('api.products.get');
+Route::post('products/create', [ProductController::class, 'create_product'])->name('api.products.create');
+Route::put('product/{product_id}', [ProductController::class, 'update_product'])->name('api.products.update');
+Route::delete('product/{product_id}', [ProductController::class, 'delete_product'])->name('api.products.delete');
+
 
 Route::group([
     'middleware' => 'auth:api'
 ], function(){
     Route::get('auth/get-user', [AuthController::class, 'get_user'])->name('api.auth.get_user');
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('api.auth.logout');
-    Route::post('products/create', [ProductController::class, 'create_product'])->name('api.products.create');
-    Route::put('product/{product_id}', [ProductController::class, 'update_product'])->name('api.products.update');
-    Route::delete('product/{product_id}', [ProductController::class, 'delete_product'])->name('api.products.delete');
 });
